@@ -28,6 +28,8 @@
 #include <vector>
 #include <valarray>
 
+#include <cinttypes>
+
 namespace MyTypes {
     enum Color : uint8_t {
         Red,

@@ -1,0 +1,3 @@
+[submodule "bitscpp_src"]
+	path = bitscpp_src
+	url = https://github.com/Drwalin/bitscpp.git

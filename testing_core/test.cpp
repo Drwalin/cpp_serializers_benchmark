@@ -22,6 +22,7 @@
 
 
 #include <testing/test.h>
+
 #include <iostream>
 #include <chrono>
 
@@ -91,6 +92,8 @@ std::string getLibraryName(SerializationLibrary name) {
             return "yas";
         case SerializationLibrary::ZPP_BITS:
             return "zpp_bits";
+        case SerializationLibrary::BITSCPP:
+            return "bitscpp";
     }
     throw "Unknown library name";
 }

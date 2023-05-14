@@ -9,32 +9,38 @@
 * [protobuf](https://developers.google.com/protocol-buffers/) 3.17.3
 * [zpp_bits](https://github.com/eyalz800/zpp_bits) 2.0
 * [msgpack](https://github.com/msgpack/msgpack-c) 3.3.0
+* [bitscpp](https://github.com/Drwalin/bitscpp) 3.3.0
 
 ## GCC 11 (Ubuntu 20.04 x64)
 
+Tested with 3000000 iterations and 50 objects.
+
 | library     | test case                                                  | bin size | data size | ser time | des time |
 | ----------- | ---------------------------------------------------------- | -------- | --------- | -------- | -------- |
-| bitsery     | general                                                    | 70904B   | 6913B     | 1470ms   | 1524ms   |
-| bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 70888B   | 6913B     | 1416ms   | 1561ms   |
-| bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 75192B   | 7113B     | 1490ms   | 1291ms   |
-| bitsery     | compression[<sup>3</sup>](#additional-tests-information)   | 70848B   | 4213B     | 1927ms   | 2044ms   |
-| bitsery     | fixed buffer[<sup>4</sup>](#additional-tests-information)  | 53648B   | 6913B     | 927ms    | 1466ms   |
-| bitsery     | stream[<sup>5</sup>](#additional-tests-information)        | 59568B   | 6913B     | 1611ms   | 6180ms   |
-| bitsery     | unsafe read[<sup>6</sup>](#additional-tests-information)   | 66760B   | 6913B     | 1352ms   | 982ms    |
-| boost       | general                                                    | 279024B  | 11037B    | 15126ms  | 12724ms  |
-| cereal      | general                                                    | 70560B   | 10413B    | 10777ms  | 9088ms   |
-| flatbuffers | general                                                    | 70640B   | 14924B    | 8757ms   | 3361ms   |
-| handwritten | general[<sup>7</sup>](#additional-tests-information)       | 47936B   | 10413B    | 1506ms   | 1577ms   |
-| handwritten | unsafe[<sup>8</sup>](#additional-tests-information)        | 47944B   | 10413B    | 1616ms   | 1392ms   |
-| iostream    | general[<sup>9</sup>](#additional-tests-information)       | 53872B   | 8413B     | 11956ms  | 12928ms  |
-| msgpack     | general                                                    | 89144B   | 8857B     | 2770ms   | 14033ms  |
-| protobuf    | general                                                    | 2077864B | 10018B    | 19929ms  | 20592ms  |
-| protobuf    | arena[<sup>10</sup>](#additional-tests-information)        | 2077872B | 10018B    | 10319ms  | 11787ms  |
-| yas         | general[<sup>11</sup>](#additional-tests-information)      | 61072B   | 10463B    | 2286ms   | 1770ms   |
-| yas         | compression[<sup>12</sup>](#additional-tests-information)  | 65400B   | 7315B     | 2770ms   | 2498ms   |
-| yas         | stream[<sup>13</sup>](#additional-tests-information)       | 56184B   | 10463B    | 10871ms  | 11182ms  |
-| zpp_bits    | general                                                    | 52192B   | 8413B     | 733ms    | 693ms    |
-| zpp_bits    | fixed buffer                                               | 48000B   | 8413B     | 620ms    | 667ms    |
+| bitsery     | general                                                    | 68816B   | 6913B     | 10539ms  | 11348ms  |
+| bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 68800B   | 6913B     | 10606ms  | 10039ms  |
+| bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 73184B   | 7113B     | 10659ms  | 11578ms  |
+| bitsery     | compression[<sup>3</sup>](#additional-tests-information)   | 69184B   | 4213B     | 13156ms  | 13248ms  |
+| bitsery     | fixed buffer[<sup>4</sup>](#additional-tests-information)  | 51712B   | 6913B     | 9159ms   | 11326ms  |
+| bitsery     | stream[<sup>5</sup>](#additional-tests-information)        | 57368B   | 6913B     | 12410ms  | 44351ms  |
+| bitsery     | unsafe read[<sup>6</sup>](#additional-tests-information)   | 69016B   | 6913B     | 10552ms  | 11995ms  |
+| boost       | general                                                    | 284320B  | 11037B    | 119489ms | 96336ms  |
+| cereal      | general                                                    | 64584B   | 10413B    | 72263ms  | 62823ms  |
+| handwritten | general[<sup>7</sup>](#additional-tests-information)       | 49936B   | 10413B    | 8205ms   | 8470ms   |
+| handwritten | unsafe[<sup>8</sup>](#additional-tests-information)        | 45776B   | 10413B    | 8277ms   | 5924ms   |
+| iostream    | general[<sup>9</sup>](#additional-tests-information)       | 56128B   | 8413B     | 77125ms  | 95702ms  |
+| msgpack     | general                                                    | 86584B   | 8857B     | 11133ms  | 82820ms  |
+| protobuf    | general                                                    | 2113264B | 10018B    | 114960ms | 142434ms |
+| protobuf    | arena[<sup>10</sup>](#additional-tests-information)        | 2113264B | 10018B    | 62038ms  | 87675ms  |
+| yas         | general[<sup>11</sup>](#additional-tests-information)      | 59000B   | 10463B    | 20316ms  | 14543ms  
+| yas         | compression[<sup>12</sup>](#additional-tests-information)  | 59176B   | 7315B     | 25298ms  | 16531ms  |
+| yas         | stream[<sup>13</sup>](#additional-tests-information)       | 58128B   | 10463B    | 75035ms  | 75795ms  |
+| zpp_bits    | general                                                    | 45896B   | 8413B     | 6107ms   | 6445ms   |
+| zpp_bits    | fixed buffer                                               | 45816B   | 8413B     | 5516ms   | 6218ms   |
+| bitscpp     | general                                                    | 50288B   | 7366B     | 5608ms   | 12177ms  |
+| bitscpp     | compressed_float                                           | 54488B   | 4666B     | 6086ms   | 12529ms  |
+| bitscpp     | compressed_float unsafe_read                               | 50192B   | 4666B     | 6108ms   | 8172ms   |
+| bitscpp     | general unsafe_read                                        | 50080B   | 7366B     | 5706ms   | 7950ms   |
 
 
 ## Clang 12.0.1 (Ubuntu 20.04 x64)
