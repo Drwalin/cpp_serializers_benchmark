@@ -25,7 +25,8 @@
 #define CPP_SERIALIZERS_BENCHMARK_TESTING_CORE_TEST_H
 
 #include <cstddef>
-#include <testing/types.h>
+
+#include "types.h"
 
 struct Buf {
     const uint8_t* ptr;
@@ -43,6 +44,7 @@ enum class SerializationLibrary {
     PROTOBUF,
     YAS,
     ZPP_BITS,
+	BITSCPP,
 };
 
 struct TestInfo {
