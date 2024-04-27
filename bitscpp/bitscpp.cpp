@@ -25,26 +25,30 @@
 #include "../testing_core/testing/test.h"
 
 namespace bitscpp {
-	inline bitscpp::ByteWriter& op(bitscpp::ByteWriter& s, const MyTypes::Color& v) {
+	template<typename BT>
+	inline bitscpp::ByteWriter<BT>& op(bitscpp::ByteWriter<BT>& s, const MyTypes::Color& v) {
 		s.op((uint8_t&)v);
 		return s;
 	}
-	inline bitscpp::ByteWriter& op(bitscpp::ByteWriter& s, const MyTypes::Vec3& v) {
+	template<typename BT>
+	inline bitscpp::ByteWriter<BT>& op(bitscpp::ByteWriter<BT>& s, const MyTypes::Vec3& v) {
 		s.op(v.x);
 		s.op(v.y);
 		s.op(v.z);
 		return s;
 	}
-	inline bitscpp::ByteWriter& op(bitscpp::ByteWriter& s, const MyTypes::Weapon& v) {
-		s.op(v.name);
+	template<typename BT>
+	inline bitscpp::ByteWriter<BT>& op(bitscpp::ByteWriter<BT>& s, const MyTypes::Weapon& v) {
+		s.op_string_sized(v.name, 1);
 		s.op(v.damage);
 		return s;
 	}
-	inline bitscpp::ByteWriter& op(bitscpp::ByteWriter& s, const MyTypes::Monster& v) {
+	template<typename BT>
+	inline bitscpp::ByteWriter<BT>& op(bitscpp::ByteWriter<BT>& s, const MyTypes::Monster& v) {
 		s.op(v.pos);
 		s.op(v.mana);
 		s.op(v.hp);
-		s.op(v.name);
+		s.op_string_sized(v.name, 1);
 		s.op(v.inventory);
 		s.op(v.color);
 		s.op(v.weapons);
@@ -66,7 +70,7 @@ namespace bitscpp {
 		return s;
 	}
 	inline bitscpp::ByteReader<true>& op(bitscpp::ByteReader<true>& s, MyTypes::Weapon& v) {
-		s.op(v.name);
+		s.op_string_sized(v.name, 1);
 		s.op(v.damage);
 		return s;
 	}
@@ -74,7 +78,7 @@ namespace bitscpp {
 		s.op(v.pos);
 		s.op(v.mana);
 		s.op(v.hp);
-		s.op(v.name);
+		s.op_string_sized(v.name, 1);
 		s.op(v.inventory);
 		s.op(v.color);
 		s.op(v.weapons);
@@ -83,6 +87,8 @@ namespace bitscpp {
 		return s;
 	}
 } // namespace bitscpp
+
+#include "buffer.hpp"
 
 class bitscppArchiver : public ISerializerTest {
 public:
@@ -110,7 +116,7 @@ public:
     }
 
 private:
-	std::vector<uint8_t> _buf;
+	Buffer _buf;
 };
 
 int main() {
