@@ -11,12 +11,12 @@
 * [msgpack](https://github.com/msgpack/msgpack-c) 3.3.0
 * [bitscpp](https://github.com/Drwalin/bitscpp) 3.3.0
 
-## GCC 11 (Ubuntu 20.04 x64)
+## GCC 13.2.1 (Arch Linux x86\_64 6.8.6)
 
 Tested with 3000000 iterations and 50 objects.
 
 | library     | test case                                                  | bin size | data size | ser time | des time |
-| ----------- | ---------------------------------------------------------- | -------- | --------- | -------- | -------- |
+|-------------|------------------------------------------------------------|----------|-----------|----------|----------|
 | bitsery     | general                                                    | 68816B   | 6913B     | 10539ms  | 11348ms  |
 | bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 68800B   | 6913B     | 10606ms  | 10039ms  |
 | bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 73184B   | 7113B     | 10659ms  | 11578ms  |
@@ -32,15 +32,16 @@ Tested with 3000000 iterations and 50 objects.
 | msgpack     | general                                                    | 86584B   | 8857B     | 11133ms  | 82820ms  |
 | protobuf    | general                                                    | 2113264B | 10018B    | 114960ms | 142434ms |
 | protobuf    | arena[<sup>10</sup>](#additional-tests-information)        | 2113264B | 10018B    | 62038ms  | 87675ms  |
-| yas         | general[<sup>11</sup>](#additional-tests-information)      | 59000B   | 10463B    | 20316ms  | 14543ms  
+| yas         | general[<sup>11</sup>](#additional-tests-information)      | 59000B   | 10463B    | 20316ms  | 14543ms  |
 | yas         | compression[<sup>12</sup>](#additional-tests-information)  | 59176B   | 7315B     | 25298ms  | 16531ms  |
 | yas         | stream[<sup>13</sup>](#additional-tests-information)       | 58128B   | 10463B    | 75035ms  | 75795ms  |
 | zpp_bits    | general                                                    | 45896B   | 8413B     | 6107ms   | 6445ms   |
 | zpp_bits    | fixed buffer                                               | 45816B   | 8413B     | 5516ms   | 6218ms   |
-| bitscpp     | general                                                    | 50288B   | 7366B     | 5608ms   | 12177ms  |
-| bitscpp     | compressed_float                                           | 54488B   | 4666B     | 6086ms   | 12529ms  |
-| bitscpp     | compressed_float unsafe_read                               | 50192B   | 4666B     | 6108ms   | 8172ms   |
-| bitscpp     | general unsafe_read                                        | 50080B   | 7366B     | 5706ms   | 7950ms   |
+| bitscpp     | general                                                    | 48984B   | 7366B     | 692ms    | 734ms    |
+| bitscpp     | compressed_float                                           | 49144B   | 4666B     | 733ms    | 934ms    |
+| bitscpp     | compressed_float unsafe_read                               | 49160B   | 4666B     | 769ms    | 778ms    |
+| bitscpp     | general unsafe_read                                        | 49048B   | 7366B     | 701ms    | 792ms    |
+| bitsery     | general                                                    | 83800B   | 6913B     | 1245ms   | 956ms    |
 
 
 ## Clang 12.0.1 (Ubuntu 20.04 x64)
