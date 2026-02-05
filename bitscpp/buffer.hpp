@@ -1,6 +1,5 @@
 #include <cstdint>
 #include <cstdlib>
-#include <cstring>
 
 class Buffer
 {
@@ -8,7 +7,7 @@ public:
 	
 	Buffer()
 	{
-		_capacity = 512;
+		_capacity = 64;
 		_size = 0;
 		_data = (uint8_t *)malloc(_capacity);
 	}
@@ -37,14 +36,12 @@ public:
 		_size = s;
 	}
 	void reserve(size_t c) {
-		if (_capacity >= c)
+		if (_capacity >= c) {
+			[[likely]];
 			return;
+		}
 		_capacity = (c*3)/2+32;
-		uint8_t *new_data = (uint8_t*)malloc(_capacity);
-		memcpy(new_data, _data, _size);
-		free(_data);
-		_data = new_data;
-// 		_data = (uint8_t *)realloc(_data, _capacity);
+		_data = (uint8_t *)realloc(_data, _capacity);
 	}
 	void clear() {
 		_size = 0;

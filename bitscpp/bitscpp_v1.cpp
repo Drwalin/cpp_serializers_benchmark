@@ -90,8 +90,6 @@ namespace bitscpp {
 
 #include "buffer.hpp"
 
-// using Buffer = std::vector<uint8_t>;
-
 class bitscppArchiver : public ISerializerTest {
 public:
     Buf serialize(const std::vector<MyTypes::Monster> &data) override {

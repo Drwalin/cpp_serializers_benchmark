@@ -1,6 +1,5 @@
-
-set(bitscpp_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/bitscpp)
-set(bitscpp_INCLUDE ${bitscpp_PREFIX}/src/bitscpp_dep/include)
+# set(bitscpp_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external/bitscpp)
+# set(bitscpp_INCLUDE ${bitscpp_PREFIX}/src/bitscpp_dep/include)
 # ExternalProject_Add(
 #         bitscpp_dep
 #         PREFIX ${bitscpp_PREFIX}
@@ -17,10 +16,18 @@ file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 foreach(ExampleFile ${ExampleFiles})
     get_filename_component(ExampleName ${ExampleFile} NAME_WE)
     add_executable(${ExampleName} ${ExampleFile})
-	set_property(TARGET ${ExampleName} PROPERTY CXX_STANDARD 26)
-#     add_dependencies(${ExampleName} bitscpp_dep)
+#     add_dependencies(${ExampleName} bitscpp)
     target_include_directories(${ExampleName} PUBLIC ${bitscpp_INCLUDE})
     target_link_libraries(${ExampleName} PRIVATE Testing::core)
+    target_link_libraries(${ExampleName} PUBLIC bitscpp)
     add_test(NAME test_${ExampleName} COMMAND ${ExampleName})
 endforeach()
 
+
+#     get_filename_component(ExampleName bitscpp_v2.cpp NAME_WE)
+#     add_executable(${ExampleName} bitscpp_v2.cpp)
+#     add_dependencies(${ExampleName} bitscpp)
+#     target_include_directories(${ExampleName} PUBLIC ${bitscpp_INCLUDE})
+#     target_link_libraries(${ExampleName} PRIVATE Testing::core)
+#     target_link_libraries(${ExampleName} PUBLIC bitscpp)
+#     add_test(NAME test_${ExampleName} COMMAND ${ExampleName})

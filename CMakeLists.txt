@@ -14,7 +14,7 @@ include(ExternalProject)
 #default definitions
 add_definitions(-DNDEBUG)
 add_definitions(-DMONSTERS=50)
-add_definitions(-DSAMPLES=300000)
+add_definitions(-DSAMPLES=100000)
 
 # compiler
 set(CMAKE_CXX_STANDARD 20)
@@ -31,6 +31,8 @@ add_subdirectory(testing_core)
 #################################################
 # configure executables
 #################################################
+
+add_subdirectory(bitscpp_src)
 
 add_subdirectory(bitscpp)
 add_subdirectory(bitsery)
