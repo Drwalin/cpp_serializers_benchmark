@@ -27,11 +27,13 @@
 
 #include "../bitscpp_src/include/bitscpp/ByteReader_v2.hpp"
 #include "../bitscpp_src/include/bitscpp/ByteWriter_v2.hpp"
-#include "../testing_core/testing/test.h"
-
+#include "../bitscpp_src/src/ByteReader_v2.cpp"
 #include "../bitscpp_src/src/ByteWriter_v2.cpp"
 
-#define ByteWriter                                                             \
+#include "../testing_core/testing/test.h"
+
+
+#define ByteWriter															 \
 	BITSCPP_CONCATENATE_NAMES(ByteWriter, BITSCPP_BYTE_WRITER_V2_NAME_SUFFIX)
 
 namespace bitscpp {
@@ -42,9 +44,9 @@ template<>
 	}
 template<>
 	inline bitscpp::v2::ByteWriter& _impl_v2_writer<MyTypes::Vec3>::op(bitscpp::v2::ByteWriter& s, const MyTypes::Vec3& v) {
-		s.op_bfloat(v.x);
-		s.op_bfloat(v.y);
-		s.op_bfloat(v.z);
+		s.op_float(v.x);
+		s.op_float(v.y);
+		s.op_float(v.z);
 		return s;
 	}
 template<>
@@ -66,8 +68,6 @@ template<>
 		s.op(v.path);
 		return s;
 	}
-	
-	
 
 template<>
 	inline bitscpp::v2::ByteReader& _impl_v2_reader<MyTypes::Color>::op(bitscpp::v2::ByteReader& s, MyTypes::Color& v) {
@@ -76,9 +76,9 @@ template<>
 	}
 template<>
 	inline bitscpp::v2::ByteReader& _impl_v2_reader<MyTypes::Vec3>::op(bitscpp::v2::ByteReader& s, MyTypes::Vec3& v) {
-		s.op_bfloat(v.x);
-		s.op_bfloat(v.y);
-		s.op_bfloat(v.z);
+		s.op_float(v.x);
+		s.op_float(v.y);
+		s.op_float(v.z);
 		return s;
 	}
 template<>
@@ -104,35 +104,38 @@ template<>
 
 class bitscppArchiver : public ISerializerTest {
 public:
-    Buf serialize(const std::vector<MyTypes::Monster> &data) override {
-		_buf.reserve(10000000);
-        _buf.clear();
+	bitscppArchiver() {
+		_buf.reserve(1000000);
+	}
+
+	Buf serialize(const std::vector<MyTypes::Monster> &data) override {
+		_buf.clear();
 		{
 			bitscpp::v2::ByteWriter writer(_buf);
 			writer.op(data);
 		}
 		
-        return Buf{reinterpret_cast<uint8_t *>(_buf.data()), _buf.size()};
-    }
+		return Buf{reinterpret_cast<uint8_t *>(_buf.data()), _buf.size()};
+	}
 
-    void deserialize(Buf buf, std::vector<MyTypes::Monster> &res) override {
+	void deserialize(Buf buf, std::vector<MyTypes::Monster> &res) override {
 		bitscpp::v2::ByteReader reader(buf.ptr, buf.bytesCount);
 		reader.op(res);
-    }
+	}
 
-    TestInfo testInfo() const override {
-        return {
-            SerializationLibrary::BITSCPP,
-            "general",
-            ""
-        };
-    }
+	TestInfo testInfo() const override {
+		return {
+			SerializationLibrary::BITSCPP,
+			"v2",
+			""
+		};
+	}
 
 private:
 	Buffer _buf;
 };
 
 int main() {
-    bitscppArchiver test{};
-    return runTest(test);
+	bitscppArchiver test{};
+	return runTest(test);
 }

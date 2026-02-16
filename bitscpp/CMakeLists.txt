@@ -12,15 +12,23 @@
 
 include_directories(../bitscpp_src/include/)
 
-file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+# file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/bitscpp_v2.cpp)
 foreach(ExampleFile ${ExampleFiles})
     get_filename_component(ExampleName ${ExampleFile} NAME_WE)
-    add_executable(${ExampleName} ${ExampleFile})
+	add_executable(${ExampleName} ${ExampleFile}
+		../bitscpp_src/thirdpart/half_float/HalfFloat.cpp
+# 		../bitscpp_src/src/ByteReader_v2.cpp
+# 		Writer_v2.cxx
+# 		../bitscpp_src/src/Endianness.cpp
+	)
 #     add_dependencies(${ExampleName} bitscpp)
     target_include_directories(${ExampleName} PUBLIC ${bitscpp_INCLUDE})
     target_link_libraries(${ExampleName} PRIVATE Testing::core)
-    target_link_libraries(${ExampleName} PUBLIC bitscpp)
+#     target_link_libraries(${ExampleName} PUBLIC bitscpp)
     add_test(NAME test_${ExampleName} COMMAND ${ExampleName})
+	set_property(TARGET ${ExampleName} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 endforeach()
 
 
