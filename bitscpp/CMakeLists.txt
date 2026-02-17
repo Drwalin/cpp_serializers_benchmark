@@ -13,15 +13,15 @@
 include_directories(../bitscpp_src/include/)
 
 
-# file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
-file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/bitscpp_v2.cpp)
+file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+# file(GLOB ExampleFiles ${CMAKE_CURRENT_SOURCE_DIR}/bitscpp_v2.cpp)
 foreach(ExampleFile ${ExampleFiles})
     get_filename_component(ExampleName ${ExampleFile} NAME_WE)
-	add_executable(${ExampleName} ${ExampleFile}
+	add_executable(${ExampleName}
+		${ExampleFile}
 		../bitscpp_src/thirdpart/half_float/HalfFloat.cpp
-# 		../bitscpp_src/src/ByteReader_v2.cpp
-# 		Writer_v2.cxx
-# 		../bitscpp_src/src/Endianness.cpp
+		../bitscpp_src/src/ByteReader_v2.cpp
+		Writer_v2.cxx
 	)
 #     add_dependencies(${ExampleName} bitscpp)
     target_include_directories(${ExampleName} PUBLIC ${bitscpp_INCLUDE})

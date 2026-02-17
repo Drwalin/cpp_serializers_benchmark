@@ -11,62 +11,63 @@
 * [msgpack](https://github.com/msgpack/msgpack-c) 3.3.0
 * [bitscpp](https://github.com/Drwalin/bitscpp) 3.3.0
 
-## GCC 13.2.1 (Arch Linux x86\_64 6.8.6)
-
-Tested with 1000000 iterations and 80 objects.
-
-| library     | test case                                                  | bin size | data size | ser time | des time |
-| ----------- | ---------------------------------------------------------- | -------- | --------- | -------- | -------- |
-| bitscpp     | general                                                    | 48984B   | 11527B    | 3580ms   | 3642ms   |
-| bitscpp     | compressed_float                                           | 49144B   | 7324B     | 3809ms   | 4927ms   |
-| bitscpp     | compressed_float unsafe_read                               | 49160B   | 7324B     | 3925ms   | 4360ms   |
-| bitscpp     | general unsafe_read                                        | 49048B   | 11527B    | 3779ms   | 4522ms   |
-| bitsery     | general                                                    | 83800B   | 10804B    | 6448ms   | 4877ms   |
-| bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 83928B   | 10804B    | 6447ms   | 4195ms   |
-| bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 92512B   | 11124B    | 5212ms   | 4640ms   |
-| bitsery     | compression[<sup>3</sup>](#additional-tests-information)   | 96312B   | 6601B     | 7528ms   | 5988ms   |
-| bitsery     | fixed buffer[<sup>4</sup>](#additional-tests-information)  | 50360B   | 10804B    | 4447ms   | 5601ms   |
-| bitsery     | stream[<sup>5</sup>](#additional-tests-information)        | 59792B   | 10804B    | 6775ms   | 22189ms  |
-| bitsery     | unsafe read[<sup>6</sup>](#additional-tests-information)   | 83136B   | 10804B    | 6304ms   | 2643ms   |
-| cereal      | general                                                    | 82816B   | 16229B    | 31590ms  | 25792ms  |
-| handwritten | general[<sup>7</sup>](#additional-tests-information)       | 48768B   | 16229B    | 4084ms   | 5419ms   |
-| handwritten | unsafe[<sup>8</sup>](#additional-tests-information)        | 44672B   | 16229B    | 4188ms   | 2857ms   |
-| iostream    | general[<sup>9</sup>](#additional-tests-information)       | 54592B   | 13129B    | 39496ms  | 49056ms  |
-| msgpack     | general                                                    | 85296B   | 13805B    | 5778ms   | 42534ms  |
-| yas         | general[<sup>10</sup>](#additional-tests-information)      | 69840B   | 16309B    | 10438ms  | 7139ms   |
-| yas         | compression[<sup>11</sup>](#additional-tests-information)  | 74168B   | 11419B    | 12394ms  | 7724ms   |
-| yas         | stream[<sup>12</sup>](#additional-tests-information)       | 60280B   | 16309B    | 37138ms  | 37877ms  |
-| zpp_bits    | general                                                    | 57088B   | 13129B    | 3118ms   | 3034ms   |
-| zpp_bits    | fixed buffer                                               | 44712B   | 13129B    | 2853ms   | 3133ms   |
-
-
-## Clang 12.0.1 (Ubuntu 20.04 x64)
+## GCC 15.2.1 (Arch Linux x86\_64 6.18.6)
 
 Tested with 300000 iterations and 50 objects.
 
 | library     | test case                                                  | bin size | data size | ser time | des time |
 | ----------- | ---------------------------------------------------------- | -------- | --------- | -------- | -------- |
-| bitsery     | general                                                    | 53728B   | 6913B     | 2128ms   | 1832ms   |
-| bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 55320B   | 6913B     | 2789ms   | 2071ms   |
-| bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 54360B   | 7113B     | 2195ms   | 1953ms   |
-| bitsery     | compression[<sup>3</sup>](#additional-tests-information)   | 54688B   | 4213B     | 4315ms   | 4181ms   |
-| bitsery     | fixed buffer[<sup>4</sup>](#additional-tests-information)  | 49248B   | 6913B     | 946ms    | 1941ms   |
-| bitsery     | stream[<sup>5</sup>](#additional-tests-information)        | 54776B   | 6913B     | 2047ms   | 6089ms   |
-| bitsery     | unsafe read[<sup>6</sup>](#additional-tests-information)   | 49688B   | 6913B     | 2092ms   | 1162ms   |
-| boost       | general                                                    | 237008B  | 11037B    | 16011ms  | 13017ms  |
-| cereal      | general                                                    | 61480B   | 10413B    | 9977ms   | 8565ms   |
-| flatbuffers | general                                                    | 62512B   | 14924B    | 9812ms   | 3472ms   |
-| handwritten | general[<sup>7</sup>](#additional-tests-information)       | 43112B   | 10413B    | 1391ms   | 1321ms   |
-| handwritten | unsafe[<sup>8</sup>](#additional-tests-information)        | 43120B   | 10413B    | 1393ms   | 1212ms   |
-| iostream    | general[<sup>9</sup>](#additional-tests-information)       | 48632B   | 8413B     | 10992ms  | 12771ms  |
-| msgpack     | general                                                    | 77384B   | 8857B     | 3563ms   | 14705ms  |
-| protobuf    | general                                                    | 2032712B | 10018B    | 18125ms  | 20211ms  |
-| protobuf    | arena[<sup>10</sup>](#additional-tests-information)        | 2032760B | 10018B    | 9166ms   | 11378ms  |
-| yas         | general[<sup>11</sup>](#additional-tests-information)      | 51000B   | 10463B    | 2114ms   | 1558ms   |
-| yas         | compression[<sup>12</sup>](#additional-tests-information)  | 51424B   | 7315B     | 2874ms   | 2739ms   |
-| yas         | stream[<sup>13</sup>](#additional-tests-information)       | 54680B   | 10463B    | 10624ms  | 10604ms  |
-| zpp_bits    | general                                                    | 47128B   | 8413B     | 790ms    | 715ms    |
-| zpp_bits    | fixed buffer                                               | 43056B   | 8413B     | 605ms    | 694ms    |
+| bitscpp     | compressed_float                                           | 49304B   | 4666B     | 730ms    | 1466ms   |
+| bitscpp     | compressed_float unsafe_read                               | 49304B   | 4666B     | 730ms    | 1297ms   |
+| bitscpp     | general unsafe_read                                        | 49200B   | 7366B     | 686ms    | 1219ms   |
+| bitscpp     | general                                                    | 49280B   | 7366B     | 679ms    | 710ms    |
+| bitscpp     | v2                                                         | 50088B   | 8078B     | 1496ms   | 1392ms   |
+| bitsery     | general                                                    | 100904B  | 6913B     | 1150ms   | 1035ms   |
+| bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 101032B  | 6913B     | 1130ms   | 1923ms   |
+| bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 96816B   | 7113B     | 1298ms   | 1113ms   |
+| bitsery     | compression[<sup>3</sup>](#additional-tests-information)   | 113744B  | 4213B     | 1342ms   | 1149ms   |
+| bitsery     | fixed buffer[<sup>4</sup>](#additional-tests-information)  | 50440B   | 6913B     | 873ms    | 1074ms   |
+| bitsery     | stream[<sup>5</sup>](#additional-tests-information)        | 60264B   | 6913B     | 1186ms   | 4944ms   |
+| bitsery     | unsafe read[<sup>6</sup>](#additional-tests-information)   | 91992B   | 6913B     | 1163ms   | 511ms    |
+| cereal      | general                                                    | 83696B   | 10413B    | 6906ms   | 5897ms   |
+| handwritten | general[<sup>7</sup>](#additional-tests-information)       | 40656B   | 10413B    | 797ms    | 805ms    |
+| handwritten | unsafe[<sup>8</sup>](#additional-tests-information)        | 40664B   | 10413B    | 797ms    | 537ms    |
+| iostream    | general[<sup>9</sup>](#additional-tests-information)       | 54944B   | 8413B     | 8482ms   | 9418ms   |
+| yas         | general[<sup>10</sup>](#additional-tests-information)      | 69904B   | 10463B    | 2095ms   | 1320ms   |
+| yas         | compression[<sup>11</sup>](#additional-tests-information)  | 74336B   | 7315B     | 2380ms   | 1499ms   |
+| yas         | stream[<sup>12</sup>](#additional-tests-information)       | 56608B   | 10463B    | 8371ms   | 8085ms   |
+| msgpack     | general                                                    | 85224B   | 8857B     | 1233ms   | 7770ms   |
+| zpp_bits    | general                                                    | 48880B   | 8413B     | 644ms    | 605ms    |
+| zpp_bits    | fixed buffer                                               | 40704B   | 8413B     | 538ms    | 589ms    |
+
+## Clang 21.1.6 (Arch Linux x86\_64 6.18.6)
+
+Tested with 300000 iterations and 50 objects.
+
+| library     | test case                                                  | bin size | data size | ser time | des time |
+| ----------- | ---------------------------------------------------------- | -------- | --------- | -------- | -------- |
+| bitscpp     | compressed_float                                           | 42120B   | 4666B     | 824ms    | 1543ms   |
+| bitscpp     | compressed_float unsafe_read                               | 46216B   | 4666B     | 775ms    | 1394ms   |
+| bitscpp     | general unsafe_read                                        | 37944B   | 7366B     | 778ms    | 1358ms   |
+| bitscpp     | general                                                    | 50448B   | 7366B     | 798ms    | 929ms    |
+| bitscpp     | v2                                                         | 52088B   | 8078B     | 1946ms   | 1663ms   |
+| bitsery     | general                                                    | 53096B   | 6913B     | 1359ms   | 1182ms   |
+| bitsery     | brief syntax[<sup>1</sup>](#additional-tests-information)  | 58536B   | 6913B     | 1544ms   | 1147ms   |
+| bitsery     | compatibility[<sup>2</sup>](#additional-tests-information) | 57792B   | 7113B     | 1422ms   | 1235ms   |
+| bitsery     | compression[<sup>3</sup>](#additional-tests-information)   | 58664B   | 4213B     | 2889ms   | 1837ms   |
+| bitsery     | fixed buffer[<sup>4</sup>](#additional-tests-information)  | 52352B   | 6913B     | 772ms    | 1141ms   |
+| bitsery     | stream[<sup>5</sup>](#additional-tests-information)        | 53776B   | 6913B     | 1426ms   | 5149ms   |
+| bitsery     | unsafe read[<sup>6</sup>](#additional-tests-information)   | 53144B   | 6913B     | 1315ms   | 927ms    |
+| cereal      | general                                                    | 61264B   | 10413B    | 7919ms   | 6989ms   |
+| handwritten | general[<sup>7</sup>](#additional-tests-information)       | 42112B   | 10413B    | 799ms    | 756ms    |
+| handwritten | unsafe[<sup>8</sup>](#additional-tests-information)        | 42120B   | 10413B    | 799ms    | 582ms    |
+| iostream    | general[<sup>9</sup>](#additional-tests-information)       | 47800B   | 8413B     | 8009ms   | 9888ms   |
+| yas         | general[<sup>10</sup>](#additional-tests-information)      | 55024B   | 10463B    | 2085ms   | 1445ms   |
+| yas         | compression[<sup>11</sup>](#additional-tests-information)  | 59648B   | 7315B     | 2583ms   | 1981ms   |
+| yas         | stream[<sup>12</sup>](#additional-tests-information)       | 54016B   | 10463B    | 7656ms   | 8289ms   |
+| msgpack     | general                                                    | 80496B   | 8857B     | 3014ms   | 9828ms   |
+| zpp_bits    | general                                                    | 42136B   | 8413B     | 585ms    | 727ms    |
+| zpp_bits    | fixed buffer                                               | 42152B   | 8413B     | 556ms    | 703ms    |
 
 ### Additional tests information
 

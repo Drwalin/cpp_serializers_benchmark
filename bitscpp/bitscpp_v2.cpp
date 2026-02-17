@@ -25,88 +25,48 @@
 
 #include "buffer.hpp"
 
-#include "../bitscpp_src/include/bitscpp/ByteReader_v2.hpp"
-#include "../bitscpp_src/include/bitscpp/ByteWriter_v2.hpp"
-#include "../bitscpp_src/src/ByteReader_v2.cpp"
-#include "../bitscpp_src/src/ByteWriter_v2.cpp"
-
 #include "../testing_core/testing/test.h"
 
+#include "../bitscpp_src/include/bitscpp/ByteReader_v2.hpp"
+#include "../bitscpp_src/include/bitscpp/ByteWriter_v2.hpp"
+// #include "../bitscpp_src/src/ByteReader_v2.cpp"
+// #include "../bitscpp_src/src/ByteWriter_v2.cpp"
 
 #define ByteWriter															 \
 	BITSCPP_CONCATENATE_NAMES(ByteWriter, BITSCPP_BYTE_WRITER_V2_NAME_SUFFIX)
 
-namespace bitscpp {
-template<>
-	inline bitscpp::v2::ByteWriter& _impl_v2_writer<MyTypes::Color>::op(bitscpp::v2::ByteWriter& s, const MyTypes::Color& v) {
-		s.op((uint8_t&)v);
-		return s;
-	}
-template<>
-	inline bitscpp::v2::ByteWriter& _impl_v2_writer<MyTypes::Vec3>::op(bitscpp::v2::ByteWriter& s, const MyTypes::Vec3& v) {
-		s.op_float(v.x);
-		s.op_float(v.y);
-		s.op_float(v.z);
-		return s;
-	}
-template<>
-	inline bitscpp::v2::ByteWriter& _impl_v2_writer<MyTypes::Weapon>::op(bitscpp::v2::ByteWriter& s, const MyTypes::Weapon& v) {
-		s.op_sized_string(v.name);
-		s.op(v.damage);
-		return s;
-	}
-template<>
-	inline bitscpp::v2::ByteWriter& _impl_v2_writer<MyTypes::Monster>::op(bitscpp::v2::ByteWriter& s, const MyTypes::Monster& v) {
-		s.op(v.pos);
-		s.op_int(v.mana);
-		s.op_int(v.hp);
-		s.op_sized_string(v.name);
-		s.op_byte_array(v.inventory);
-		s.op(v.color);
-		s.op(v.weapons);
-		s.op(v.equipped);
-		s.op(v.path);
-		return s;
-	}
-
-template<>
-	inline bitscpp::v2::ByteReader& _impl_v2_reader<MyTypes::Color>::op(bitscpp::v2::ByteReader& s, MyTypes::Color& v) {
-		s.op((uint8_t&)v);
-		return s;
-	}
-template<>
-	inline bitscpp::v2::ByteReader& _impl_v2_reader<MyTypes::Vec3>::op(bitscpp::v2::ByteReader& s, MyTypes::Vec3& v) {
-		s.op_float(v.x);
-		s.op_float(v.y);
-		s.op_float(v.z);
-		return s;
-	}
-template<>
-	inline bitscpp::v2::ByteReader& _impl_v2_reader<MyTypes::Weapon>::op(bitscpp::v2::ByteReader& s, MyTypes::Weapon& v) {
-		s.op_sized_string(v.name);
-		s.op(v.damage);
-		return s;
-	}
-template<>
-	inline bitscpp::v2::ByteReader& _impl_v2_reader<MyTypes::Monster>::op(bitscpp::v2::ByteReader& s, MyTypes::Monster& v) {
-		s.op(v.pos);
-		s.op(v.mana);
-		s.op(v.hp);
-		s.op_sized_string(v.name);
-		s.op_byte_array(v.inventory);
-		s.op(v.color);
-		s.op(v.weapons);
-		s.op(v.equipped);
-		s.op(v.path);
-		return s;
-	}
-} // namespace bitscpp
+namespace MyTypes {
+constexpr void serialize(auto &s, MyTypes::Color& v) {
+	s.op((uint8_t&)v);
+}
+constexpr void serialize(auto& s, MyTypes::Vec3& v) {
+	s.op_float(v.x);
+	s.op_float(v.y);
+	s.op_float(v.z);
+}
+constexpr void serialize(auto& s, MyTypes::Weapon& v) {
+	s.op_sized_string(v.name);
+	s.op(v.damage);
+}
+constexpr void serialize(auto& s, MyTypes::Monster& v) {
+	s.op(v.pos);
+	s.op(v.mana);
+	s.op(v.hp);
+	s.op_sized_string(v.name);
+	s.op_byte_array(v.inventory);
+	s.op(v.color);
+	s.op(v.weapons);
+	s.op(v.equipped);
+	s.op(v.path);
+}
+}
 
 class bitscppArchiver : public ISerializerTest {
 public:
 	bitscppArchiver() {
 		_buf.reserve(1000000);
 	}
+	virtual ~bitscppArchiver() {}
 
 	Buf serialize(const std::vector<MyTypes::Monster> &data) override {
 		_buf.clear();
